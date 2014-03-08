@@ -127,6 +127,10 @@ config GPIO_IT8761E
 	help
 	  Say yes here to support GPIO functionality of IT8761E super I/O chip.
 
+config GPIO_EFM32
+	tristate "Energy Micro EFM32 GPIO support"
+	depends on ARCH_EFM32
+
 config GPIO_EM
 	tristate "Emma Mobile GPIO"
 	depends on ARM

@@ -14,8 +14,6 @@
 #include <asm/thread_notify.h>
 #include <asm/v7m.h>
 
-#include <mach/entry-macro.S>
-
 #include "entry-header.S"
 
 #ifdef CONFIG_TRACE_IRQFLAGS
@@ -141,3 +139,7 @@ ENTRY(vector_table)
 	.rept	64 - 16
 	.long	__irq_entry		@ 16..64 - External Interrupts
 	.endr
+
+	.globl  handle_arch_irq
+handle_arch_irq:
+	.long	0

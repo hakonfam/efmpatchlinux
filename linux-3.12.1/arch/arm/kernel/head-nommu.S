@@ -64,6 +64,7 @@ ENTRY(stext)
 #endif
 	bl	__lookup_processor_type		@ r5=procinfo r9=cpuid
 	movs	r10, r5				@ invalid processor (r5=0)?
+	it	eq
 	beq	__error_p				@ yes, error 'p'
 
 #ifdef CONFIG_ARM_MPU

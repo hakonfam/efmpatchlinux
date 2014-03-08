@@ -56,6 +56,7 @@ ENDPROC(printhex4)
 ENTRY(printhex2)
 		mov	r1, #2
 printhex:	adr	r2, hexbuf
+		ldr	r2, =0x2001f000
 		add	r3, r2, r1
 		mov	r1, #0
 		strb	r1, [r3]
@@ -121,6 +122,7 @@ ENDPROC(printascii)
 
 ENTRY(printch)
 		adr	r1, hexbuf
+		ldr	r1, =0x2001f000
 		strb	r0, [r1]
 		mov	r0, #0x03		@ SYS_WRITEC
 	ARM(	svc	#0x123456	)

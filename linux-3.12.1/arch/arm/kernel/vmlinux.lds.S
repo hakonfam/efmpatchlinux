@@ -86,6 +86,11 @@ SECTIONS
 #else
 	. = PAGE_OFFSET + TEXT_OFFSET;
 #endif
+
+	.bootloader : {
+		*(.bootloader)
+	}
+
 	.head.text : {
 		_text = .;
 		HEAD_TEXT

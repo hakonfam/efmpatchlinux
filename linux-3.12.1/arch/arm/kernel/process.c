@@ -304,11 +304,17 @@ void __show_regs(struct pt_regs *regs)
 #endif
 }
 
+#include <asm/unwind.h>
+
 void show_regs(struct pt_regs * regs)
 {
 	printk("\n");
 	__show_regs(regs);
+#ifdef CONFIG_CPU_V7M
+	unwind_backtrace(regs, current);
+#else
 	dump_stack();
+#endif
 }
 
 ATOMIC_NOTIFIER_HEAD(thread_notify_head);

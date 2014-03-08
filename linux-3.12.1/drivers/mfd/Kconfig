@@ -1065,6 +1065,11 @@ config MFD_ARIZONA_SPI
 	  Support for the Wolfson Microelectronics Arizona platform audio SoC
 	  core functionality controlled via I2C.
 
+config MFD_EFM32BOARD
+	tristate "efm32 board"
+	depends on ARM && (ARCH_EFM32 || COMPILE_TEST)
+	select MFD_CORE
+
 config MFD_WM5102
 	bool "Wolfson Microelectronics WM5102"
 	depends on MFD_ARIZONA

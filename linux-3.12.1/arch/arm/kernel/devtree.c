@@ -43,6 +43,10 @@ void __init arm_dt_memblock_reserve(void)
 	if (!initial_boot_params)
 		return;
 
+	if ((unsigned long)initial_boot_params < PHYS_OFFSET)
+		/* assume the dtb is located in ro memory */
+		return;
+
 	/* Reserve the dtb region */
 	memblock_reserve(virt_to_phys(initial_boot_params),
 			 be32_to_cpu(initial_boot_params->totalsize));

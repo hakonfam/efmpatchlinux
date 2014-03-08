@@ -91,9 +91,12 @@
  * It is difficult to define and perhaps will never meet the original meaning
  * of this define that was meant to.
  * Fortunately, there is no reference for this in noMMU mode, for now.
+ *
+ * HACK: copy_from_user must even handle copying from flash. So don't impose a
+ * limit at all. Not sure this is correct ...
  */
 #ifndef TASK_SIZE
-#define TASK_SIZE		(CONFIG_DRAM_SIZE)
+#define TASK_SIZE		(~0UL)
 #endif
 
 #ifndef TASK_UNMAPPED_BASE

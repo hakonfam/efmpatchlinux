@@ -1483,6 +1483,24 @@ __releases(&info->lock)
 	return 0;
 }
 
+#ifdef HAVE_ARCH_FB_UNMAPPED_AREA
+#define fb_get_unmapped_area get_fb_unmapped_area
+#else
+unsigned long fb_get_unmapped_area(struct file *filp, unsigned long orig_addr,
+		unsigned long len, unsigned long pgoff, unsigned long flags)
+{
+	struct fb_info * const info = filp->private_data;
+	unsigned long screen_size = info->screen_size ?: info->fix.smem_len;
+
+	screen_size = PAGE_ALIGN(screen_size);
+
+	if (pgoff > screen_size || len > screen_size - pgoff)
+		return -EINVAL;
+
+	return (unsigned long)info->screen_base;
+}
+#endif
+
 static const struct file_operations fb_fops = {
 	.owner =	THIS_MODULE,
 	.read =		fb_read,
@@ -1494,9 +1512,7 @@ static const struct file_operations fb_fops = {
 	.mmap =		fb_mmap,
 	.open =		fb_open,
 	.release =	fb_release,
-#ifdef HAVE_ARCH_FB_UNMAPPED_AREA
-	.get_unmapped_area = get_fb_unmapped_area,
-#endif
+	.get_unmapped_area = fb_get_unmapped_area,
 #ifdef CONFIG_FB_DEFERRED_IO
 	.fsync =	fb_deferred_io_fsync,
 #endif

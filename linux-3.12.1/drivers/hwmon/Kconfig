@@ -382,6 +382,16 @@ config SENSORS_DA9055
 	  This driver can also be built as a module.  If so, the module
 	  will be called da9055-hwmon.
 
+config SENSORS_EFM32_ADC
+	tristate "Energy Micro EFM32 ADC"
+	depends on OF && ARM && (ARCH_EFM32 || COMPILE_TEST)
+	help
+	  If you say yes here you get support for Energy Micro's ADC
+	  build into their EFM32 SoCs
+
+	  This driver can also be built as a module. If so, the module
+	  will be called efm32-adc.
+
 config SENSORS_I5K_AMB
 	tristate "FB-DIMM AMB temperature sensor on Intel 5000 series chipsets"
 	depends on PCI
